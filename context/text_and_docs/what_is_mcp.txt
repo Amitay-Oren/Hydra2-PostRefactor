@@ -1,0 +1,31 @@
+Model Context Protocol (MCP): A Comprehensive Overview
+Introduction
+The Model Context Protocol (MCP) is an open standard developed by Anthropic to facilitate seamless integration between AI systems, particularly large language models (LLMs), and external data sources, tools, and services. By providing a standardized interface, MCP enables AI applications to access and interact with various data repositories, business tools, and development environments without the need for custom integrations. 
+Objectives of MCP
+•	Standardization: Establish a universal protocol that allows AI assistants (MCP clients) to query or retrieve data and context from diverse sources.WorkOS — Your app, Enterprise Ready.
+•	Secure and Scalable Connections: Replace fragmented integrations with a single protocol that handles authentication, usage policies, and standardized data formats.YouTube+11WorkOS — Your app, Enterprise Ready.+11Medium+11
+•	Sustainability: Foster an ecosystem of reusable connectors (MCP servers) so developers can build once and reuse them across multiple LLMs and clients. Microsoft Tech Community+2WorkOS — Your app, Enterprise Ready.+2Home+2
+Key Components of MCP
+1.	MCP Hosts: AI applications, such as chat clients or integrated development environments (IDEs), that require access to data through MCP.
+2.	MCP Clients: Interfaces within AI applications that establish connections with MCP servers to facilitate communication.
+3.	MCP Servers: Lightweight programs that offer specific capabilities through the standardized protocol, exposing data and functionalities to MCP clients.Microsoft Tech Community
+4.	Local Data Sources: Files, databases, and services on a local machine that MCP servers can securely access.Model Context Protocol+1Microsoft Tech Community+1
+5.	Remote Services: External systems available over the internet (e.g., through APIs) that MCP servers can connect to. Home+3Model Context Protocol+3Microsoft Tech Community+3
+Core Features of MCP
+•	Resources: Structured data or content that provides additional context to the AI model, such as documents, images, or database schemas.
+•	Prompts: Pre-defined templates or instructions that guide interactions with the language model, optimized for specific tasks or domains.
+•	Tools: Executable functions that allow models to perform actions or retrieve information, such as querying a database or calling an API. Wikipedia, la enciclopedia libre
+Benefits of MCP
+•	Enhanced AI Responses: By connecting AI models to live data sources, MCP ensures that responses are up-to-date, context-rich, and domain-specific.WorkOS — Your app, Enterprise Ready.
+•	Unified Data Access: Developers can configure one protocol, allowing the LLM to access all registered connectors, leading to a more uniform and standardized ecosystem.WorkOS — Your app, Enterprise Ready.+1DigitalOcean+1
+•	Long-term Maintainability: MCP's open, standardized approach reduces breakage and simplifies debugging, eliminating the need to rewrite integrations for new platforms. WorkOS — Your app, Enterprise Ready.
+Security Considerations
+MCP emphasizes security through features like granular permissions, ensuring that AI models access only authorized data. It also supports best practices for securing data within an organization's infrastructure. Microsoft Tech CommunityModel Context Protocol
+Getting Started with MCP
+Developers can begin building and testing MCP connectors by accessing resources such as the MCP Quickstart Guide and the Model Context Protocol GitHub repository, which contains technical documentation, code examples, and implementation guides. Anthropic Help Center+1Home+1
+Conclusion
+The Model Context Protocol (MCP) represents a significant advancement in AI integration, providing a standardized, secure, and scalable method for AI systems to interact with external data sources and tools. By adopting MCP, developers can enhance the functionality and applicability of AI models across various domains, fostering a more connected and efficient AI ecosystem.
+The Model Context Protocol (MCP) has rapidly gained traction since its inception, with developers and organizations worldwide contributing to its expansion. As of early 2025, the MCP ecosystem boasts tens of thousands of servers, each providing unique capabilities and integrations. This extensive network enables AI applications to connect seamlessly with a vast array of tools and data sources, enhancing their functionality and versatility. The proliferation of MCP servers underscores the protocol's effectiveness in standardizing AI integrations, fostering a collaborative environment where innovations compound and the collective utility of AI systems continues to grow.
+ 
+Sources
+

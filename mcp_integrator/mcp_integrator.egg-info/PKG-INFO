@@ -1,0 +1,350 @@
+Metadata-Version: 2.4
+Name: mcp_integrator
+Version: 0.1.0
+Summary: MCP Integration Agent for Hydra
+Author: Hydra Team
+Author-email: team@hydra.ai
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: requests
+Requires-Dist: pydantic
+Requires-Dist: openai
+Requires-Dist: python-dotenv
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# MCP Integrator
+
+A collection of tools for discovering, indexing, and integrating MCP (Model, Component, or Protocol) servers from registries. The system helps users find the best MCPs for their needs and recommends optimal combinations for complex tasks.
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Installation](#installation)
+- [Components](#components)
+- [Usage](#usage)
+- [Development](#development)
+- [Testing](#testing)
+- [Project Roadmap](#project-roadmap)
+- [Performance Optimization Components](#performance-optimization-components)
+- [Troubleshooting](#troubleshooting)
+
+## Overview
+
+MCP Integrator provides tools to:
+
+1. **Find MCPs**: Search for specific MCPs using natural language queries
+2. **Recommend MCP Stacks**: Analyze complex tasks and suggest optimal MCP combinations
+3. **Integrate MCPs**: Interface with multiple MCP registries and integrate MCPs with other systems
+
+### Package Structure
+
+```
+mcp_integrator/
+  â”œâ”€â”€ cli/                  # Command-line interfaces
+  â”‚   â”œâ”€â”€ mcp_finder_cli.py # CLI for finding MCPs
+  â”‚   â””â”€â”€ stack_recommender_cli.py # CLI for stack recommendation
+  â”œâ”€â”€ core/                 # Core finder functionality
+  â”‚   â””â”€â”€ finder.py         # MCP finder implementation
+  â”œâ”€â”€ task/                 # Task analysis and decomposition
+  â”‚   â”œâ”€â”€ analyzer.py       # Task analysis implementation
+  â”‚   â””â”€â”€ decomposer.py     # Smart task decomposition
+  â”œâ”€â”€ query/                # Query generation and processing
+  â”‚   â”œâ”€â”€ generator.py      # Query generation
+  â”‚   â”œâ”€â”€ clarifier.py      # Query clarification
+  â”‚   â”œâ”€â”€ cache.py          # Query caching
+  â”‚   â””â”€â”€ models.py         # Query data models
+  â”œâ”€â”€ solution/             # Solution recommendation
+  â”‚   â””â”€â”€ recommender.py    # Stack recommendation implementation
+  â””â”€â”€ utils/                # Utility functions and interfaces
+      â””â”€â”€ context.py        # Cross-subtask learning
+```
+
+## Installation
+
+1. Clone the repository
+2. Install the package:
+   ```bash
+   pip install -e .
+   ```
+   This will install the package in development mode, allowing you to make changes to the code without reinstalling.
+
+3. Set up environment variables in a `.env` file:
+   ```
+   SMITHERY_API_TOKEN=your_smithery_api_token
+   OPENAI_API_KEY=your_openai_api_key
+   ```
+
+## Components
+
+### MCP Finder
+
+A tool for searching and discovering MCPs in the Smithery Registry.
+
+```bash
+# Basic usage
+python -m mcp_integrator.cli.mcp_finder_cli --query "your search query" --api-token YOUR_TOKEN
+
+# Interactive mode with GPT-4o-powered assistant
+python -m mcp_integrator.cli.mcp_finder_cli --gpt4o
+```
+
+### MCP Stack Recommender
+
+A system that analyzes complex tasks, breaks them down into subtasks, and recommends optimal MCP combinations.
+
+```bash
+# Run directly as a standalone tool
+python -m mcp_integrator.cli.stack_recommender_cli --interactive
+
+# Or through the MCP finder
+python -m mcp_integrator.cli.mcp_finder_cli --stack-recommender
+```
+
+#### Key Features
+
+- **Task Decomposition**: Uses AI to break down complex tasks into manageable subtasks
+- **Multi-Query Generation**: Creates specialized queries for each subtask
+- **Intelligent Recommendations**: Suggests the best MCP combinations
+- **Solution Explanations**: Provides setup guides and integration instructions
+
+## Usage
+
+### Basic MCP Search
+
+```python
+from mcp_integrator.core.finder import find_mcps
+
+# Search for MCPs
+results = find_mcps("text processing", api_token_to_use="YOUR_TOKEN")
+for mcp in results:
+    print(f"{mcp['name']}: {mcp['description']}")
+```
+
+### Stack Recommendation
+
+```python
+from mcp_integrator.solution.recommender import MCPStackRecommender
+from mcp_integrator.core.finder import find_mcps
+
+# Initialize recommender
+recommender = MCPStackRecommender(
+    mcp_finder_func=find_mcps,
+    enable_caching=True,
+    enable_cross_learning=True,
+    enable_smart_decomposition=True
+)
+
+# Define clarification callback
+def get_clarification(question):
+    return input(f"{question}: ")
+
+# Analyze task
+results = recommender.analyze_task(
+    "Build a system to search, summarize and analyze legal documents",
+    clarification_callback=get_clarification
+)
+
+# Display results
+recommender.display_results(results)
+```
+
+### Task Analysis and Decomposition
+
+```python
+from mcp_integrator.task.analyzer import TaskDecomposer
+from mcp_integrator.task.decomposer import SmartDecomposer
+
+# Initialize decomposer
+task_decomposer = TaskDecomposer()
+
+# Decompose a task
+subtasks = task_decomposer.decompose_task(
+    "Build a system to search, summarize and analyze legal documents"
+)
+
+# Use smart decomposer for additional optimization
+smart_decomposer = SmartDecomposer()
+optimized_subtasks = smart_decomposer.optimize_decomposition(subtasks)
+```
+
+### Query Generation and Clarification
+
+```python
+from mcp_integrator.query.generator import QueryGenerator
+from mcp_integrator.query.clarifier import QueryClarifier
+
+# Generate queries for subtasks
+generator = QueryGenerator()
+queries = generator.generate_queries(subtasks)
+
+# Clarify queries
+clarifier = QueryClarifier()
+
+def get_clarification(question):
+    return input(f"{question}: ")
+
+clarified_queries = clarifier.clarify_queries(
+    queries, 
+    clarification_callback=get_clarification
+)
+```
+
+### Cross-Subtask Learning
+
+```python
+from mcp_integrator.utils.context import GlobalContext
+
+# Initialize global context
+context = GlobalContext(
+    relevance_threshold=0.7,
+    enable_cross_learning=True
+)
+
+# Add a clarification
+context.add_clarification(
+    subtask={"name": "document_search", "description": "Search for documents"},
+    query="document search",
+    clarification_text="I need to search for legal cases related to intellectual property",
+    refined_query="intellectual property legal cases search"
+)
+
+# Apply clarifications to a similar subtask
+def refine_query(subtask, query, clarification):
+    key_terms = " ".join(clarification.key_terms)
+    return f"{query} relating to {key_terms}"
+
+refined_query = context.apply_relevant_clarifications(
+    subtask={"name": "document_summarization", "description": "Summarize legal documents"},
+    query="document summarization",
+    refine_func=refine_query
+)
+```
+
+## Development
+
+### Contributing
+
+Contributions are welcome! Please check the tasks.md file for current work and planned improvements.
+
+## Testing
+
+```bash
+# Run all tests
+pytest
+
+# Run with coverage report
+pytest --cov=.
+```
+
+Current test coverage is focused on key components. Future work will expand coverage to all components, aiming for at least 80% code coverage.
+
+## Project Roadmap
+
+See tasks.md for the detailed project roadmap, which includes:
+
+1. Code reorganization (âœ… Completed)
+2. Comprehensive testing improvements
+3. Documentation enhancements
+4. Performance optimization
+5. User experience improvements
+
+## Performance Optimization Components
+
+The system includes several performance optimization components:
+
+### Query Cache
+
+Prevents redundant API calls by caching query results and detecting semantically similar queries.
+
+### Global Context
+
+Enables cross-subtask learning by storing user clarifications and applying them to related subtasks.
+
+### Smart Decomposer
+
+Optimizes task decomposition by detecting similar subtasks, merging redundant ones, and adjusting complexity.
+
+## Troubleshooting
+
+### UTF-16 Encoding Issues in __init__.py Files
+
+If you encounter errors like this when trying to import the package:
+
+```
+SyntaxError: (unicode error) 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+```
+
+or
+
+```
+SyntaxError: source code string cannot contain null bytes
+```
+
+This is likely due to the `__init__.py` files being saved with UTF-16 encoding instead of UTF-8. Here's how to fix it:
+
+1. Identify all the problematic files:
+   ```powershell
+   Get-ChildItem -Recurse -Path mcp_integrator -Filter "__init__.py" | ForEach-Object {
+       $filePath = $_.FullName
+       $content = Get-Content $filePath -Encoding Byte -TotalCount 4
+       if ($content[0] -eq 0xFF -and $content[1] -eq 0xFE) {
+           Write-Output "UTF-16 BOM found in: $filePath"
+       }
+   }
+   ```
+
+2. Fix the encoding by replacing the content with a simple UTF-8 encoded file:
+   ```powershell
+   foreach ($dir in @('', 'cli', 'core', 'query', 'solution', 'task', 'utils')) {
+       $path = if ($dir -eq '') {
+           "mcp_integrator\__init__.py"
+       } else {
+           "mcp_integrator\$dir\__init__.py"
+       }
+       Set-Content -Path $path -Value "# Package initialization" -Encoding UTF8 -Force
+   }
+   ```
+
+3. Reinstall the package:
+   ```powershell
+   pip install -e .
+   ```
+
+4. Test the import:
+   ```powershell
+   python -c "import mcp_integrator; print('Package imported successfully!')"
+   ```
+
+### Preventing the Issue in the Future
+
+When creating new Python files:
+- Always use UTF-8 encoding without BOM (Byte Order Mark)
+- Use editors that default to UTF-8 encoding for Python files
+- If using automated scripts to create files, ensure they use UTF-8 encoding
+
+### Command Line Issues on Windows
+
+If you encounter issues with command-line operators like `&&` in PowerShell, use separate commands or switch to Command Prompt where these operators are supported:
+
+```bash
+# In Command Prompt this works:
+python -c "import mcp_integrator" && python -m mcp_integrator.cli.stack_recommender_cli --help
+
+# In PowerShell, use separate commands:
+python -c "import mcp_integrator"
+python -m mcp_integrator.cli.stack_recommender_cli --help
+```
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details. 

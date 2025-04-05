@@ -1,0 +1,3 @@
+[console_scripts]
+mcp-finder = mcp_integrator.cli.mcp_finder_cli:main
+stack-recommender = mcp_integrator.cli.stack_recommender_cli:main

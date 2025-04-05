@@ -1,0 +1,83 @@
+SMITHERY REGISTRY API DOCUMENTATION
+
+PURPOSE: Programmatic access to search and obtain launch configurations for Model Context Protocol (MCP) servers.
+
+AUTHENTICATION:
+- Required: Bearer token in Authorization header
+- Format: "Authorization: Bearer your-api-token"
+- Obtain token: User profile > API keys
+
+ENDPOINTS:
+
+1. LIST SERVERS
+   URL: GET https://registry.smithery.ai/servers
+   QUERY PARAMETERS:
+   - q: Search query (semantic search)
+   - page: Page number (default: 1)
+   - pageSize: Items per page (default: 10)
+   
+   FILTERING SYNTAX:
+   - Text search: "machine learning"
+   - Owner filter: owner:username
+   - Repository filter: repo:repository-name
+   - Deployment status: is:deployed
+   - Combined example: "owner:smithery-ai repo:fetch is:deployed machine learning"
+   
+   RESPONSE SCHEMA:
+   {
+     servers: Array<{
+       qualifiedName: string;
+       displayName: string;
+       description: string;
+       homepage: string;
+       useCount: string;
+       isDeployed: boolean;
+       createdAt: string;
+     }>;
+     pagination: {
+       currentPage: number;
+       pageSize: number;
+       totalPages: number;
+       totalCount: number;
+     };
+   }
+
+2. GET SERVER
+   URL: GET https://registry.smithery.ai/servers/{qualifiedName}
+   
+   RESPONSE SCHEMA:
+   {
+     qualifiedName: string;
+     displayName: string;
+     deploymentUrl: string;
+     connections: Array<{
+       type: string;
+       url?: string;
+       configSchema: JSONSchema;
+     }>;
+   }
+
+WEBSOCKET CONNECTION:
+- URL Format: https://server.smithery.ai/${qualifiedName}/ws?config=${base64encode(config)}
+- Config must comply with server's configSchema
+- Config is base64-encoded JSON
+
+TYPESCRIPT SDK USAGE:
+
+```typescript
+import { WebSocketClientTransport } from "@modelcontextprotocol/sdk/client/websocket.js"
+import { createSmitheryUrl } from "@smithery/sdk/config.js"
+const url = createSmitheryUrl(
+"https://your-smithery-mcp-server/ws",
+{
+// config object matching schema
+},
+)
+const transport = new WebSocketClientTransport(url)
+```
+
+CONCEPTS:
+- Smithery Registry indexes MCP servers
+- Servers have configuration schemas defining connection requirements
+- Connection types: "ws" (WebSocket) or "stdio"
+- API is under development and may change
