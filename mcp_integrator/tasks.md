@@ -12,91 +12,57 @@ Each Hydra agent is designed to work with a maximum of 5 MCPs. Selection will be
 ### Code Reorganization and Structure Improvement
 - **Description:** Reorganize the codebase for better maintainability, testability, and scalability
 - **Status:** ✅ Completed
-- **Date Added:** 2023-07-01
-- **Subtasks:**
-  - [x] **Create New Package Structure:**
-    - [x] Implement the following directory structure:
-      ```
-      mcp_integrator/
-        ├── __init__.py
-        ├── cli/            # Command-line interfaces
-        │   ├── __init__.py
-        │   ├── mcp_finder_cli.py
-        │   └── stack_recommender_cli.py
-        ├── core/           # Core finder functionality
-        │   ├── __init__.py
-        │   └── finder.py
-        ├── task/           # Task analysis and decomposition
-        │   ├── __init__.py
-        │   ├── analyzer.py
-        │   └── decomposer.py
-        ├── query/          # Query generation and processing
-        │   ├── __init__.py
-        │   ├── generator.py
-        │   ├── clarifier.py
-        │   ├── cache.py
-        │   └── models.py
-        ├── solution/       # Solution recommendation and explanation
-        │   ├── __init__.py
-        │   ├── recommender.py
-        │   └── explainer.py 
-        └── utils/          # Utility functions and interfaces
-            ├── __init__.py
-            ├── context.py
-            └── interface.py # Note: interface.py from original structure needs creation/review
-      ```
-    - [x] Create proper `__init__.py` files with appropriate imports (and fixed encoding)
-    - [x] Update import statements across all modules
-    - [x] Create setup.py for package installation
-    - [x] Add missing `solution/explainer.py` file
-
-  - [x] **Split Large Modules:** (Initial refactoring done, further refinement possible)
-    - [x] Refactor `mcp_stack_recommender.py` into `solution/recommender.py` and `cli/stack_recommender_cli.py`
-    - [x] Refactor `mcp_query_models.py` into `query/models.py`
-    - [x] Refactor `smart_decomposer.py` into `task/decomposer.py`
-    - [x] Refactor `solution_explainer.py` into `solution/explainer.py`
-    - Note: File length constraints will be monitored going forward.
-
-  - [x] **Standardize Naming Conventions:**
-    - [x] Resolve duplicate MCP finder files (`mcp-finder.py` -> `cli/mcp_finder_cli.py` and `mcp_finder.py` -> `core/finder.py`)
-    - [x] Ensure consistent use of underscores in file names
-    - [x] Standardize function and variable naming conventions (Ongoing check)
-    - [x] Update docstrings to follow Google style (Ongoing check)
-
-  - **Progress:**
-    - All original modules have been moved to the new package structure.
-    - Import statements updated.
-    - Encoding issues in `__init__.py` and other `.py` files resolved.
-    - Missing `solution/explainer.py` added.
-    - Package is installable and runnable.
-
-  - **Next Steps:**
-    - Create/Review `utils/interface.py` (renamed from `integration_interface.py`)
+- **Summary:** All original modules have been refactored into a standard Python package structure (`cli/`, `core/`, `query/`, `solution/`, `task/`, `utils/`). Imports are updated, encoding issues fixed, and the package is installable and runnable via `python -m`.
+- **Next Steps:**
+    - Create/Review `utils/interface.py` (potentially needed for programmatic integration)
     - Implement comprehensive tests for all modules.
     - Enhance documentation (README, usage examples, component docs).
 
 ### Comprehensive Testing Improvement
 - **Description:** Enhance test coverage and test quality across all components
 - **Status:** Not Started
-- **Date Added:** 2023-07-01
 - **Subtasks:**
-  - [ ] Add Unit Tests for All Modules
-  - [ ] Increase Test Coverage
-  - [ ] Add Integration Tests
+  - [ ] Add Unit Tests for All Modules (mirroring package structure in `/tests`)
+  - [ ] Increase Test Coverage (aim for 80%+)
+  - [ ] Add Integration Tests for key workflows
   - [ ] Setup GitHub Actions for CI
 
-## MCP Integration Agent Development
-* Improve Task Context Sharing - **Not Started**
-   * Implement Cross-Subtask Learning
-   * Add Support for Task Dependencies
-   * Create Context Visualization
+### Documentation Enhancement
+- **Description:** Improve project documentation for better usability and contribution
+- **Status:** Not Started
+- **Subtasks:**
+  - [ ] Update README with any further changes (e.g., `utils/interface.py`)
+  - [ ] Add detailed usage examples
+  - [ ] Create component-level documentation (in `/docs`)
+  - [ ] Ensure all functions/classes have Google-style docstrings
 
-* Enhance Query Generation - **Not Started**
-   * Improve Keyword Extraction
-   * Add Support for Multi-Step Queries
-   * Implement Query Clustering
+### MCP Integration Agent Development - Core Functionality
+- **Description:** Develop and enhance the core capabilities of the agent.
+- **Status:** In Progress (Stack Recommendation features added, others pending)
+- **Subtasks:**
+  - [ ] **Registry Discovery Module:** Implement API calls & normalization for multiple registries (Smithery, Composio, etc.).
+  - [ ] **Indexing & Evaluation Engine:** Define/refine criteria for MCP selection (max 5 per agent, precision, reliability).
+  - [ ] **Integration Interface (`utils/interface.py`):** Design and build an interface for programmatic invocation by other Hydra agents. Ensure secure and standardized data exchange.
+  - [ ] **Improve Task Context Sharing:** Implement cross-subtask learning improvements, task dependencies, context visualization.
+  - [ ] **Enhance Query Generation:** Improve keyword extraction, support multi-step queries, implement query clustering.
+  - [ ] **Optimize MCP Recommendation:** Improve ranking, support MCP combinations, add metadata filtering.
 
-* Optimize MCP Recommendation - **Not Started**
-   * Improve Ranking Algorithm
-   * Add Support for MCP Combinations
-   * Implement Metadata-Based Filtering 
+### MCP Integration Agent Development - Automation & Execution
+- **Description:** Enable automated application and implementation of recommended MCP stacks.
+- **Status:** Not Started
+- **Subtasks:**
+  - [ ] **Define Stack Implementation Schema:** Specify how a recommended stack and its configuration should be represented for automation.
+  - [ ] **Develop Automated Setup Module:** Create logic to automatically configure and initialize MCPs based on the schema.
+  - [ ] **Implement Connection/Workflow Logic:** Generate or execute code to connect the recommended MCPs in the correct sequence.
+  - [ ] **Error Handling & Validation:** Add mechanisms to validate automated setups and handle failures gracefully.
+
+## Backlog / Future Enhancements
+// ... (Keep existing backlog items) ...
+
+## Milestones
+// ... (Keep existing milestones, maybe mark Reorg as done) ...
+- Milestone 4: Code Reorganization (✅ Completed)
+// ...
+
+## Discovered Items / Insights
+// ... (Keep existing insights) ... 

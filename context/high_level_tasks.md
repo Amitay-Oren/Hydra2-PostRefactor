@@ -1,7 +1,7 @@
 # Hydra High-Level Project Roadmap
 
 ## Overview
-Hydra is an autonomous orchestration system designed to channel global wisdom by constantly scanning, ingesting, and operationalizing the best frameworks, protocols, and modus operandi from around the world. This document outlines the major subprojects that collectively realize Hydra’s vision. Each subproject feeds into the overall system, ensuring that the best ideas are integrated, and all agents have the right tools to execute at scale.
+Hydra is an autonomous orchestration system designed to channel global wisdom by constantly scanning, ingesting, and operationalizing the best frameworks, protocols, and modus operandi from around the world. This document outlines the major subprojects that collectively realize Hydra's vision. Each subproject feeds into the overall system, ensuring that the best ideas are integrated, and all agents have the right tools to execute at scale.
 
 ---
 
@@ -10,21 +10,27 @@ Hydra is an autonomous orchestration system designed to channel global wisdom by
 ### 1. MCP Integration Agent
 - **Status:** In Progress
 - **Description:** 
-  - Discovers, indexes, and integrates MCP servers from multiple registries (e.g., Smithery, Composio, Glama, MCP.so, Pulse MCP).
-  - Ensures that each Hydra agent accesses a maximum of 5 MCPs, selected based on precision fit and reliability.
+  - Discovers, indexes, and evaluates MCP servers from multiple registries (e.g., Smithery, Composio, Glama, MCP.so, Pulse MCP).
+  - Recommends optimal stacks of MCPs for complex tasks submitted programmatically by other Hydra agents (e.g., Team Leader).
+  - Enables **automated implementation and execution** of recommended MCP stacks, minimizing manual setup.
+  - Ensures that each Hydra agent accesses a maximum of 5 *active* MCP integrations simultaneously, selected based on precision fit and reliability.
 - **Active Tasks:**
-  - Registry Discovery Module: API calls and data normalization.
-  - Indexing & Evaluation Engine: Implement selection criteria for precision and reliability.
-  - Integration Interface: Expose indexed MCP tools to other Hydra agents.
-  - On-Demand Execution Setup: Configure the agent to run on demand.
+  - Registry Discovery Module: API calls and data normalization for more registries.
+  - Indexing & Evaluation Engine: Refine selection criteria (precision, reliability, compatibility).
+  - **Programmatic Integration Interface (`utils/interface.py`):** Finalize the interface for other agents to submit tasks and receive stack recommendations.
+  - **Automated Stack Implementation:** Develop modules to automatically configure, connect, and execute recommended MCP stacks based on a defined schema.
+  - Enhance Core Features: Improve task decomposition, query generation/clarification, and cross-subtask learning.
 - **Milestones:**
-  - **Prototype:** Complete MCP Discovery for one registry.
+  - **Prototype:** Complete MCP Discovery for one registry (✅ Completed)
+  - **Reorganization:** Refactor code into a maintainable package (✅ Completed)
   - **Multi-Registry Integration:** Support at least three registries with evaluation criteria enforced.
+  - **Programmatic Interface:** Stable interface for task submission and recommendation retrieval.
+  - **Automated Implementation:** Initial version capable of setting up and running a simple recommended stack.
   - **Full Deployment:** Achieve full integration across target registries with complete logging and monitoring.
 - **Discovered Items/Insights:**
-  - Need for a universal schema to normalize MCP responses.
-  - Documenting API rate limits and optimizing on-demand calls.
-  - Developing a scoring system to ensure only the top 5 MCPs are selected.
+  - Need for a universal schema for MCPs and stack implementation.
+  - Documenting API rate limits and optimizing calls.
+  - Developing a robust scoring system for MCP selection and stack compatibility.
 
 ---
 
@@ -49,7 +55,7 @@ Hydra is an autonomous orchestration system designed to channel global wisdom by
 - **Status:** Planned
 - **Description:** 
   - Continuously scans global sources (open-source projects, academic research, industry standards) for new tools, frameworks, and protocols.
-  - Feeds discovered insights into Hydra’s overall stack.
+  - Feeds discovered insights into Hydra's overall stack.
 - **Active Tasks:**
   - Develop monitoring modules for GitHub, forums, and research databases.
   - Define evaluation criteria for tool selection.
